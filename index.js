@@ -5,7 +5,8 @@ const modalCountryDetails = document.getElementById("modalCountryDetails");
 const modalWeatherDetails = document.getElementById("modalWeatherDetails");
 
 async function fetchCountryData() {
-  const countryInput = document.getElementById("countryInput").value;
+  const countryInputField = document.getElementById("countryInput");
+  const countryInput = countryInputField.value.trim();
   if (!countryInput) {
     alert("Please enter a country name.");
     return;
@@ -14,7 +15,9 @@ async function fetchCountryData() {
   try {
     const response = await fetch(`https://restcountries.com/v3.1/name/${countryInput}`);
     const countries = await response.json();
+
     countryGrid.innerHTML = "";
+    window.scrollTo({ top: 0, behavior: "smooth" });
 
     countries.forEach(country => {
       const card = document.createElement("div");
@@ -33,6 +36,8 @@ async function fetchCountryData() {
 
       countryGrid.appendChild(card);
     });
+
+    countryInputField.value = ""; // Clear input after search
   } catch (error) {
     alert("Error fetching country data. Please check your input.");
     console.error(error);
@@ -55,6 +60,16 @@ async function showMoreDetails(country, lat, lon) {
     : "N/A";
 
   modalCountryDetails.innerHTML = `
+    <h4>Location Map</h4>
+    <iframe
+      src="https://maps.google.com/maps?q=${lat},${lon}&z=5&output=embed"
+      width="100%"
+      height="250"
+      style="border:0; margin-bottom:15px;"
+      allowfullscreen
+      loading="lazy"
+    ></iframe>
+
     <img src="${country.flags.svg}" width="100">
     <p><strong>Capital:</strong> ${country.capital ? country.capital[0] : "N/A"}</p>
     <p><strong>Region:</strong> ${country.region}</p>

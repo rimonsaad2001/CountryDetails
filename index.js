@@ -16,35 +16,24 @@ async function fetchCountryData() {
     const response = await fetch(`https://restcountries.com/v3.1/name/${countryInput}`);
     const countries = await response.json();
 
+    // Clear previous results
     countryGrid.innerHTML = "";
     window.scrollTo({ top: 0, behavior: "smooth" });
 
     countries.forEach(country => {
-      const card = document.createElement("div");
-      card.className = "country-card";
-
-      card.innerHTML = `
-        <img src="${country.flags.svg}" alt="${country.name.common} flag">
-        <h3>${country.name.common}</h3>
-        <button class="details-btn">More Details</button>
-      `;
-
-      const button = card.querySelector(".details-btn");
-      button.addEventListener("click", () => {
-        showMoreDetails(country, country.latlng[0], country.latlng[1]);
-      });
-
-      countryGrid.appendChild(card);
+      // Show details for the first country
+      showCountryDetails(country);
     });
 
-    countryInputField.value = ""; // Clear input after search
+    // Clear input after search
+    countryInputField.value = ""; 
   } catch (error) {
     alert("Error fetching country data. Please check your input.");
     console.error(error);
   }
 }
 
-async function showMoreDetails(country, lat, lon) {
+async function showCountryDetails(country) {
   modal.style.display = "flex";
   modalCountryName.textContent = country.name.common;
 
@@ -59,6 +48,10 @@ async function showMoreDetails(country, lat, lon) {
     ? Object.values(country.languages).join(", ") 
     : "N/A";
 
+  const lat = country.latlng[0];
+  const lon = country.latlng[1];
+
+  // Set country details in modal
   modalCountryDetails.innerHTML = `
     <h4>Location Map</h4>
     <iframe

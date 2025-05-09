@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Country Weather Info</title>
+  <link rel="stylesheet" href="home.css" />
+</head>
+<body>
+
+  <header>
+    <nav>
+      <div class="logo">🌍 modalCountryDetails</div>
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="search">
+      <input type="text" id="countryInput" placeholder="Enter country name">
+      <button onclick="fetchCountryData()">Search</button>
+    </section>
+
+    <section class="country-grid" id="countryGrid"></section>
+
+    <div class="modal" id="countryModal">
+      <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h2 id="modalCountryName"></h2>
+        <div id="modalCountryDetails"></div>
+        <div id="modalWeatherDetails"></div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 CountryWeather</p>
+    <p class="credit">Made with ❤️ by Dipto Mohammad Rimon Sadman</p>
+    <ul>
+      <li><a href="#">Privacy</a></li>
+      <li><a href="#">Terms</a></li>
+    </ul>
+  </footer>
+  
+
+  <script src="home.js"></script>
+</body>
+</html>
